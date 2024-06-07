@@ -6,7 +6,7 @@ import javafx.scene.control.Label;
 public class Controller {
     @FXML
     public Label result;
-    public int ans = 0;
+    public double ans = 0;
     public String operation = "";
 
     @FXML
@@ -49,6 +49,7 @@ public class Controller {
         checkOperation(operation);
         result.setText("");
         operation = "Sum";
+
     }
     public void clickSub(){
         checkOperation(operation);
@@ -67,8 +68,10 @@ public class Controller {
     }
     public void clickEgal(){
         checkOperation(operation);
-        result.setText(String.valueOf(ans));
-        ans = Integer.parseInt(result.getText());
+        if(isDouble(ans)) result.setText(String.valueOf(ans));
+        else result.setText(String.valueOf((int) ans));
+
+        ans = Double.parseDouble(result.getText());
         operation = "";
     }
     public void clickPnt(){
@@ -78,13 +81,17 @@ public class Controller {
         result.setText(String.valueOf(ans));
     }
 
-    public void checkOperation(String op) {
+    public void checkOperation(String op){
         switch (op) {
-            case "Sum" -> ans += Integer.parseInt(result.getText());
-            case "Sub" -> ans -= Integer.parseInt(result.getText());
-            case "Multp" -> ans *= Integer.parseInt(result.getText());
-            case "Div" -> ans /= Integer.parseInt(result.getText());
-            default -> ans = Integer.parseInt(result.getText());
+            case "Sum" -> ans += Double.parseDouble(result.getText());
+            case "Sub" -> ans -= Double.parseDouble(result.getText());
+            case "Multp" -> ans *= Double.parseDouble(result.getText());
+            case "Div" -> ans /= Double.parseDouble(result.getText());
+            default -> ans = Double.parseDouble(result.getText());
         }
+    }
+
+    public boolean isDouble(double n) {
+        return (n - (int) n) > 0;
     }
 }
